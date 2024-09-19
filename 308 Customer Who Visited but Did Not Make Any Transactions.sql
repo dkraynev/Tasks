@@ -1,13 +1,14 @@
 # Write your MySQL query statement below
 SELECT
-    product_name,
-    year,
-    price
+    customer_id,
+    COUNT(V.visit_id) AS count_no_trans
 FROM
-    Sales S
-    JOIN
-        Product P
+    Visits V
+    LEFT OUTER JOIN
+        Transactions T
     ON
-        S.product_id = P.product_id
+        V.visit_id =  T.visit_id
 WHERE
-    sale_id
+    T.visit_id IS NULL 
+GROUP BY
+    customer_id;
