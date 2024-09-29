@@ -25,4 +25,18 @@ ORDER BY
   date DESC,
   stn ASC;
 
+
 -- #2
+-- Grouping bike trips according their routs
+
+SELECT 
+  usertype,
+  CONCAT(start_station_name, ' to ', end_station_name) AS route,
+  COUNT(*) AS num_trips,
+  ROUND(AVG(CAST(tripduration AS INT64)/60),2) AS duration
+FROM
+  `bigquery-public-data.new_york_citibike.citibike_trips`
+GROUP BY
+  2,1
+ORDER BY 3 DESC
+LIMIT 10
