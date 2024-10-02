@@ -1,6 +1,3 @@
--- JOIN --
-
--- #1 just JOIN
 SELECT
   O.*,
   W.warehouse_alias,
@@ -12,9 +9,7 @@ FROM
   ON O.warehouse_id = W.warehouse_id;
 
 SELECT
-  O.*,
-  W.warehouse_alias,
-  W.state
+  COUNt (DISTINCT W.state)
 FROM
   `inlaid-stratum-383516.warehouse_orders.orders` O
   JOIN
