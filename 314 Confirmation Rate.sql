@@ -80,7 +80,7 @@ SELECT
     S.user_id,
     CASE
         WHEN actions_all IS NULL THEN 0
-        ELSE actions_on / actions_all
+        ELSE ROUND(actions_on / actions_all, 2)
     END AS confirmation_rate
 FROM
     Signups S
@@ -88,7 +88,7 @@ FROM
         (
         SELECT
             user_id,
-            COUNT(action = 'confirmed') AS actions_on,
+            SUM(action = 'confirmed') AS actions_on,
             COUNT(action = 'timout' OR action = 'confirmed') AS actions_all
         FROM
             Confirmations
