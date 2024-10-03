@@ -43,7 +43,7 @@ Output:
 | John |
 +------+
 
-
+-- Option #1
 # Write your MySQL query statement below
 SELECT
     name
@@ -59,3 +59,21 @@ FROM
         employee
     ON id = manId
 WHERE number_of_employees >= 5;
+
+
+-- Option #2
+# Write your MySQL query statement below
+SELECT
+    name
+FROM
+    (
+    SELECT
+        managerId AS manId
+    FROM Employee
+    GROUP BY 1
+        HAVING
+            COUNT(managerId) >= 5
+    ) AS managers_wih_5_employees
+    INNER JOIN
+        employee
+    ON id = manId;
