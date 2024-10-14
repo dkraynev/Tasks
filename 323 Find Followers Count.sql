@@ -64,3 +64,57 @@ FROM
 WHERE
         F2.user_id IS NOT NULL
 ORDER BY 1;
+
+
+-- Option #2
+# Write your MySQL query statement below
+SELECT
+    DISTINCT user_id,
+    COUNT(follower_id) AS followers_count
+FROM
+    Followers
+WHERE
+    user_id IS NOT NULL
+GROUP BY user_id
+ORDER BY user_id ASC;
+
+
+-- Option #3
+-- Write your PostgreSQL query statement below
+SELECT
+    DISTINCT user_id,
+    COUNT(follower_id) AS followers_count
+FROM
+    Followers
+WHERE
+    user_id IS NOT NULL
+GROUP BY user_id
+ORDER BY user_id ASC;
+
+
+-- Option #4
+/* Write your T-SQL query statement below */
+SELECT
+    DISTINCT user_id,
+    COUNT(follower_id) AS followers_count
+FROM
+    Followers
+WHERE
+    user_id IS NOT NULL
+GROUP BY user_id
+ORDER BY user_id ASC;
+
+
+/* Write your PL/SQL query statement below */
+SELECT
+    DISTINCT user_id,
+    COUNT(follower_id) AS followers_count
+FROM
+    Followers
+WHERE
+    user_id IS NOT NULL
+GROUP BY user_id
+ORDER BY user_id ASC;
+
+
+
