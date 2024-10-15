@@ -111,3 +111,28 @@ FROM
  WHERE
     primary_flag = 'Y' OR
     (primary_flag = 'N' AND number_of_department = 1)
+
+
+-- Option #3
+# Write your MySQL query statement below
+WITH department_count AS
+    (
+    SELECT
+        employee_id,
+        COUNT(department_id) AS number_of_department
+    FROM
+        Employee
+    GROUP BY 1
+    )   
+
+SELECT
+    E.employee_id,
+    department_id
+FROM   
+    Employee E
+    JOIN
+        department_count D
+    ON E.employee_id = D.employee_id
+ WHERE
+    primary_flag = 'Y' OR
+    number_of_department = 1
