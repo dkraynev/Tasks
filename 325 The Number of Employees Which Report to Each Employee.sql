@@ -71,14 +71,14 @@ Output:
 -- Option #1
 # Write your MySQL query statement below
 SELECT
-    reports_to AS employee_id,
-    name,
-    COUNT(reports_to) AS reports_count,
-    AVG(age) AS average_age
+    DISTINCT E2.reports_to AS employee_id,
+    E1.name,
+    COUNT(E2.reports_to) AS reports_count,
+    ROUND(AVG(E2.age)) AS average_age
 FROM
-    Employees
-WHERE
-    reports_to IS NOT NULL
-GROUP BY
-    1
-ORDER BY 1 ASC;
+    Employees E1
+    JOIN
+        Employees E2
+    ON E1.employee_id = E2.reports_to
+GROUP BY 1
+ORDER BY 1;
