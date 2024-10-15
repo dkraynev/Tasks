@@ -135,4 +135,32 @@ FROM
     ON E.employee_id = D.employee_id
  WHERE
     primary_flag = 'Y' OR
-    number_of_department = 1
+    number_of_department = 1;
+
+
+-- Option #4
+-- Write your PostgreSQL query statement below
+WITH department_count AS
+    (SELECT
+        employee_id,
+        COUNT(department_id) AS number_of_departments
+    FROM
+        Employee
+    GROUP BY
+        employee_id
+    )
+
+SELECT
+    E.employee_id,
+    department_id
+FROM
+    Employee E
+    JOIN
+        department_count D
+    ON E.employee_id = D.employee_id
+WHERE
+    primary_flag = 'Y' OR
+    number_of_departments = 1;
+
+
+-- Option #5
