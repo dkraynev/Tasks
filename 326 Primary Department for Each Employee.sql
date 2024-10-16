@@ -164,3 +164,50 @@ WHERE
 
 
 -- Option #5
+/* Write your T-SQL query statement below */
+WITH department_count AS
+    (SELECT
+        employee_id,
+        COUNT(department_id) AS number_of_departments
+    FROM
+        Employee
+    GROUP BY
+        employee_id
+    )
+
+SELECT
+    E.employee_id,
+    department_id
+FROM
+    Employee E
+    JOIN
+        department_count D
+    ON E.employee_id = D.employee_id
+WHERE
+    primary_flag = 'Y' OR
+    number_of_departments = 1;
+
+
+-- Option #6
+/* Write your PL/SQL query statement below */
+WITH department_count AS
+    (SELECT
+        employee_id,
+        COUNT(department_id) AS number_of_departments
+    FROM
+        Employee
+    GROUP BY
+        employee_id
+    )
+
+SELECT
+    E.employee_id,
+    department_id
+FROM
+    Employee E
+    JOIN
+        department_count D
+    ON E.employee_id = D.employee_id
+WHERE
+    primary_flag = 'Y' OR
+    number_of_departments = 1;
