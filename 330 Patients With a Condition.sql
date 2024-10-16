@@ -44,3 +44,13 @@ Explanation: Bob and George both have a condition that starts with DIAB1.
 
 
 -- Option #1
+# Write your MySQL query statement below
+SELECT
+    patient_id,
+    patient_name,
+    conditions
+FROM
+    Patients
+WHERE
+    LOCATE('DIAB1', conditions) = 1
+    OR LOCATE(' DIAB1', conditions) > 0;
