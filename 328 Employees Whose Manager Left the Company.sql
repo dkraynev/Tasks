@@ -49,23 +49,12 @@ Joziah's manager is employee 6, who left the company because there is no row for
 
 -- Option #1
 # Write your MySQL query statement below
-WITH managers AS(
 SELECT
-    employee_id,
-    manager_id AS present_manager_id
+    employee_id
 FROM
     Employees
 WHERE
-    manager_id IN (employee_id)
-)
-
-SELECT
-    E.employee_id
-FROM
-    Employees E
-    LEFT JOIN
-    managers M
-ON E.employee_id = M.employee_id
-WHERE
-    manager_id NOT IN (present_manager_id)
-    AND salary < 30000;
+    manager_id NOT IN (SELECT employee_id FROM Employees)
+    AND salary < 30000
+ORDER BY
+    employee_id;
