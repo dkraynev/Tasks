@@ -56,23 +56,12 @@ FROM
 -- Option #2
 # Write your MySQL query statement below
 SELECT
-    E1.employee_id,
-    E1.department_id
-FROM   
-    Employee E1
-    JOIN
-    (
-    SELECT
-        employee_id,
-        COUNT(department_id) AS number_of_department
-    FROM
-        Employee
-    GROUP BY 1
-    ) AS E2
-    ON E1.employee_id = E2.employee_id
- WHERE
-    primary_flag = 'Y' OR
-    (primary_flag = 'N' AND number_of_department = 1)
+    x,
+    y,
+    z,
+    IF((x + y > z) AND (y + z > x) AND (x + z > y), 'Yes', 'No') AS triangle
+FROM
+    Triangle
 
 
 -- Option #3
