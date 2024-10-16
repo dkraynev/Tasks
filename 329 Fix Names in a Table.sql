@@ -77,3 +77,22 @@ SELECT
 FROM
     Users
 ORDER BY user_id;
+
+-- Option #2
+# Write your MySQL query statement below
+SELECT
+    user_id,
+    CONCAT(
+        UPPER(SUBSTRING(name, 1, 1)),
+        IF(' ' IN (name),
+            CONCAT(
+            LOWER(SUBSTRING(name, 2, LOCATE(' ', name))),    
+            UPPER(SUBSTRING(name, LOCATE(' ', name) + 1, 1)),
+            LOWER(SUBSTRING(name, LOCATE(' ', name) + 2))    
+            ),
+            LOWER(SUBSTRING(name, 2))
+        )
+    ) AS name
+FROM
+    Users
+ORDER BY user_id;
