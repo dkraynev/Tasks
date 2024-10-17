@@ -59,4 +59,24 @@ SELECT
 FROM
     Activity A
     JOIN Min_date M
-    ON player_id = player_id2 AND A.event_date = DATE_ADD(M.min_date, INTERVAL 1 DAY)
+    ON player_id = player_id2 AND A.event_date = DATE_ADD(M.min_date, INTERVAL 1 DAY);
+
+
+-- Option #2
+# Write your MySQL query statement below
+WiTH Min_date AS(
+SELECT
+    player_id,
+    MIN(event_date) AS min_date
+FROM
+    Activity
+GROUP BY
+    player_id
+)
+
+SELECT
+    ROUND(COUNT(*) / (SELECT COUNT(*) FROM Min_date), 2) AS fraction
+FROM
+    Activity A
+    JOIN Min_date M
+    ON A.player_id = M.player_id AND A.event_date = DATE_ADD(M.min_date, INTERVAL 1 DAY);
