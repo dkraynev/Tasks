@@ -69,3 +69,21 @@ FROM
 ORDER BY SecondHighestSalary
     ASC
 LIMIT 1;
+
+
+-- Option #2
+# Write your MySQL query statement below
+WITH Two_salaries AS(
+SELECT
+    DISTINCT salary
+FROM
+    Employee
+ORDER BY
+    salary DESC
+LIMIT 2
+)
+
+SELECT
+    IF ((SELECT COUNT(*) FROM Employee) < 2 OR MAX(salary) = MIN(salary), NULL, MIN(salary)) AS SecondHighestSalary
+FROM
+    Two_salaries;
