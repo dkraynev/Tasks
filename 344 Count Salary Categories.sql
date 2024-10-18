@@ -85,3 +85,38 @@ FROM
         AllCategories AC
     ON C.category = AC.category
 GROUP BY category;
+
+
+-- Option #2
+# Write your MySQL query statement below
+With Caterogies AS(
+SELECT
+    account_id,
+    CASE
+        WHEN income < 20000
+            THEN 'Low Salary'
+        WHEN income >= 20000 AND income <= 50000
+            THEN 'Average Salary'
+        ELSE 'High Salary'
+    END AS category
+FROM
+    Accounts
+),
+
+AllCategories AS(
+    SELECT 'Low Salary' AS category
+    UNION ALL
+    SELECT 'Average Salary'
+    UNION ALL
+    SELECT 'High Salary'
+)
+
+SELECT
+    AC.category AS category,
+    COUNT(C.category) AS accounts_count
+FROM
+    Caterogies C
+    RIGHT JOIN
+        AllCategories AC
+    ON C.category = AC.category
+GROUP BY category;
