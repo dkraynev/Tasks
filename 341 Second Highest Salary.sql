@@ -87,3 +87,18 @@ SELECT
     IF ((SELECT COUNT(*) FROM Employee) < 2 OR MAX(salary) = MIN(salary), NULL, MIN(salary)) AS SecondHighestSalary
 FROM
     Two_salaries;
+
+
+-- Option #3
+SELECT
+    IFNULL(
+        (SELECT
+            DISTINCT salary
+        FROM
+            Employee
+        ORDER BY
+            salary DESC
+        LIMIT 1 OFFSET 1
+        ),
+        NULL)
+    AS SecondHighestSalary
