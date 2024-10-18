@@ -61,13 +61,42 @@ Explanation:
 
 -- Option #1
 # Write your MySQL query statement below
+WITH Amount AS (
 SELECT
     visited_on,
-    SUM(amount) OVER (PARTITION BY BETWEEN DATE_SUB(visited_on, INTERVAL 7 DAY)
-        AND visited_on ORDER BY visited_on) AS amount,
-    AVG(amount) OVER (PARTITION BY BETWEEN DATE_SUB(visited_on, INTERVAL 7 DAY)
-        AND visited_on
-        ORDER BY visited_on) AS average_amount 
+    SUM(amount) AS day_amount
 FROM
     Customer
-WHERE visited_on BETWEEN DATE_ADD(MIN(visited_on), INTERVAL 7 DAY) AND MAX(visited_on)
+GROUP BY
+    visited_on
+ORDER BY
+    visited_on ASC
+),
+
+Min_max AS(
+SELECT
+    MAX(visited_on) AS date_max,
+    MIN(visited_on) AS date_min,
+    DATE_ADD(MIN(visited_on), INTERVAL 6 DAY) AS date_min2,
+    DATEDIFF(MAX(visited_on), DATE_ADD(MIN(visited_on), INTERVAL 6 DAY)) AS date_diff
+FROM
+    Customer
+),
+Finish AS (
+SELECT
+    visited_on,
+    SUM(day_amount)
+        OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS amount,
+    ROUND(AVG(day_amount)
+        OVER (ORDER BY visited_on ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) AS average_amount 
+FROM
+    Amount
+ORDER BY
+    visited_on
+)
+
+SELECT
+    *
+FROM
+    Finish
+WHERE visited_on BETWEEN (SELECT date_min2 FROM Min_max) AND (SELECT date_max FROM Min_max);
