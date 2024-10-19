@@ -101,3 +101,20 @@ FROM
 ORDER BY
     travelled_distance DESC,
     name ASC;
+
+
+-- Option #2
+# Write your MySQL query statement below
+SELECT
+    name,
+    IF(SUM(distance) IS NULL, 0, SUM(distance)) AS travelled_distance
+FROM
+    Rides R
+    RIGHT JOIN
+        Users U
+    ON R.user_id = U.id    
+GROUP BY
+    user_id
+ORDER BY
+    travelled_distance DESC,
+    name ASC;
