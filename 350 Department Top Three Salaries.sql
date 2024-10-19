@@ -105,4 +105,30 @@ FROM
 WHERE
     rn <= 3
 ORDER BY
-    department, salary DESC
+    department, salary DESC;
+
+
+-- Option #2
+# Write your MySQL query statement below
+WITH Sorted_salaries AS (
+SELECT
+    id,
+    name,
+    departmentId,
+    salary,
+    DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rn
+FROM
+    Employee
+)
+
+SELECT
+    D.name AS Department,
+    S.name AS Employee,
+    salary AS Salary
+FROM
+    Sorted_salaries S
+    JOIN
+        Department D
+    ON departmentId = D.id
+WHERE
+    rn <= 3;
