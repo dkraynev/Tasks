@@ -104,3 +104,16 @@ FROM
     ON user_id = user2_id
 WHERE
     page_id NOT IN (SELECT page_id FROM Likes WHERE user_id = 1);
+
+-- Option #2
+# Write your MySQL query statement below
+SELECT
+    DISTINCT page_id AS recommended_page
+FROM
+    Likes L
+    JOIN
+        Friendship F
+    ON (user1_id = 1 AND user2_id = user_id)
+    OR (user2_id = 1 AND user1_id = user_id)
+WHERE
+    page_id NOT IN (SELECT page_id FROM Likes WHERE user_id = 1);
